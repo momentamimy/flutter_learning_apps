@@ -7,6 +7,8 @@
       <excludeFolder url="file://$MODULE_DIR$/animations_test_app/build" />
       <excludeFolder url="file://$MODULE_DIR$/hive_test_project/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/hive_test_project/build" />
+      <excludeFolder url="file://$MODULE_DIR$/unit_testing_projects/validator_unit_testing/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/unit_testing_projects/validator_unit_testing/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
