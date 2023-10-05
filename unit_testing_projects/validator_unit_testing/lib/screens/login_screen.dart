@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:validator_unit_testing/home_screen.dart';
 import 'package:validator_unit_testing/q.dart';
 import 'package:validator_unit_testing/validator.dart';
 
@@ -29,7 +30,9 @@ class LoginScreen extends StatelessWidget {
                 obscureText: true),
             const SizedBox(height: 20),
             ElevatedButton(key: const ValueKey(Q.loginButton),onPressed: (){
-              formKey.currentState?.validate();
+              if(formKey.currentState?.validate()??false){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomeScreen(),));
+              }
             }, child: const Text("login"))
           ],
         ),
