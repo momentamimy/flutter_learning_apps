@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:mock_api_testing/fetch_books.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +18,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    books = fetchBooks(http.Client());
+    books = fetchBooks(Dio());
   }
 
   @override

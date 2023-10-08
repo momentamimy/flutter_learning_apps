@@ -30,6 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  dio: ^5.3.3
+  mockito: ^5.4.2
+  build_runner: ^2.4.6
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -39,7 +42,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  http: ^0.13.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
