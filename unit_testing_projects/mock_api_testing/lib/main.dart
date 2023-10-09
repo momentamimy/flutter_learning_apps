@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mock_api_testing/fetch_books.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 void main() => runApp(const MyApp());
 
