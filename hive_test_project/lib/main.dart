@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_test_project/constants.dart';
+import 'package:hive_test_project/model/student.dart';
 import 'package:hive_test_project/pages/bank_page.dart';
 import 'package:hive_test_project/pages/home_page.dart';
 import 'package:hive_test_project/pages/student_page.dart';
@@ -18,6 +19,7 @@ initHive() async {
   final dir = await getApplicationDocumentsDirectory();
   Hive.init(dir.path);
   Hive.initFlutter(Constants.hiveDBName);
+  Hive.registerAdapter<Student>(StudentAdapter());
   await Hive.openBox(Constants.homeBox);
 }
 

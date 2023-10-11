@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_test_project/constants.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     homeBox.put("0", "moamen");
     homeBox.put("1", "eltamimy");
     homeBox.put("2", "mohamed");
@@ -26,6 +28,19 @@ class _HomePageState extends State<HomePage> {
       "7": "hamouda",
     });
     homeBox.add("added_name");
+    testfun();
+  }
+  testfun() async {
+    var box = await Hive.openBox<String?>('writeNullBox');
+
+    box.values;
+    box.put('key', 'value');
+
+    box.put('key', null);
+    print("null____________________${box.containsKey('key')}");
+
+    box.delete('key');
+    print("delete____________________${box.containsKey('key')}");
   }
 
   @override
