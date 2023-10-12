@@ -2,30 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_test_project/constants.dart';
-import 'package:hive_test_project/model/student.dart';
+import 'package:hive_test_project/model/bank.dart';
 import 'package:hive_test_project/widgets/default_text_field.dart';
 
-class AddStudent extends StatefulWidget {
-  const AddStudent
-
-  ({super.key});
+class AddBank extends StatefulWidget {
+  const AddBank({super.key});
 
   @override
-  State<AddStudent> createState() => _AddStudentState();
+  State<AddBank> createState() => _AddBankState();
 }
 
-class _AddStudentState extends State<AddStudent> {
-  final studentBox = Hive.box<Student>(Constants.studentBox);
+class _AddBankState extends State<AddBank> {
+  final bankBox = Hive.box<Bank>(Constants.bankBox);
   String name = "";
-  String age = "";
-  String subject = "";
+  String accountNumber = "";
+  String amount = "";
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Student")),
+      appBar: AppBar(title: const Text("Add Bank")),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(
@@ -35,7 +33,7 @@ class _AddStudentState extends State<AddStudent> {
               DefaultTextField(
                   keyboardType: TextInputType.name,
                   validator: (value) =>
-                  value?.isEmpty ?? true ? "enter your name" : null,
+                      value?.isEmpty ?? true ? "enter your name" : null,
                   hint: "name",
                   onChange: (val) {
                     name = val;
@@ -48,31 +46,32 @@ class _AddStudentState extends State<AddStudent> {
                     child: DefaultTextField(
                         keyboardType: TextInputType.number,
                         validator: (value) =>
-                        value?.isEmpty ?? true ? "enter your age" : null,
+                            value?.isEmpty ?? true ? "enter your age" : null,
                         hint: "age",
                         onChange: (val) {
-                          age = val;
+                          accountNumber = val;
                         }),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: DefaultTextField(
-                        keyboardType: TextInputType.text,
-                        validator: (value) =>
-                        value?.isEmpty ?? true
+                        keyboardType: TextInputType.number,
+                        validator: (value) => value?.isEmpty ?? true
                             ? "enter your subject"
                             : null,
                         hint: "subject",
                         onChange: (val) {
-                          subject = val;
+                          amount = val;
                         }),
                   ),
                 ],
               ),
               const SizedBox(height: 30),
-              ElevatedButton(onPressed: () {
-                _saveStudent();
-              }, child: const Text("Save"))
+              ElevatedButton(
+                  onPressed: () {
+                    _saveBank();
+                  },
+                  child: const Text("Save"))
             ],
           ),
         ),
@@ -80,9 +79,12 @@ class _AddStudentState extends State<AddStudent> {
     );
   }
 
-  _saveStudent() {
+  _saveBank() {
     if (_formKey.currentState?.validate() ?? false) {
-      studentBox.add(Student(name: name, age: int.tryParse(age)??0, subject: subject));
+      bankBox.add(Bank(
+          name: name,
+          accountNumber: int.tryParse(accountNumber) ?? 0,
+          amount: double.tryParse(amount) ?? 0));
       Navigator.pop(context);
     }
   }
