@@ -33,7 +33,7 @@ class _AddBankState extends State<AddBank> {
               DefaultTextField(
                   keyboardType: TextInputType.name,
                   validator: (value) =>
-                      value?.isEmpty ?? true ? "enter your name" : null,
+                      value?.isEmpty ?? true ? "enter bank name" : null,
                   hint: "name",
                   onChange: (val) {
                     name = val;
@@ -45,9 +45,10 @@ class _AddBankState extends State<AddBank> {
                   Expanded(
                     child: DefaultTextField(
                         keyboardType: TextInputType.number,
-                        validator: (value) =>
-                            value?.isEmpty ?? true ? "enter your age" : null,
-                        hint: "age",
+                        validator: (value) => value?.isEmpty ?? true
+                            ? "enter account number"
+                            : null,
+                        hint: "account number",
                         onChange: (val) {
                           accountNumber = val;
                         }),
@@ -56,10 +57,9 @@ class _AddBankState extends State<AddBank> {
                   Expanded(
                     child: DefaultTextField(
                         keyboardType: TextInputType.number,
-                        validator: (value) => value?.isEmpty ?? true
-                            ? "enter your subject"
-                            : null,
-                        hint: "subject",
+                        validator: (value) =>
+                            value?.isEmpty ?? true ? "enter amount" : null,
+                        hint: "amount",
                         onChange: (val) {
                           amount = val;
                         }),

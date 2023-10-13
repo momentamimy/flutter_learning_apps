@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_test_project/add_student.dart';
+import 'package:hive_test_project/screens/add_student.dart';
 import 'package:hive_test_project/constants.dart';
 import 'package:hive_test_project/model/student.dart';
 

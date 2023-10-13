@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive_test_project/add_bank.dart';
+import 'package:hive_test_project/screens/add_bank.dart';
 import 'package:hive_test_project/constants.dart';
 import 'package:hive_test_project/model/bank.dart';
+import 'package:hive_test_project/screens/edit_bank.dart';
 
 class BankPage extends StatefulWidget {
   const BankPage({super.key});
@@ -19,13 +20,23 @@ class _BankPageState extends State<BankPage> {
       body: ValueListenableBuilder(
           valueListenable: Hive.box<Bank>(Constants.bankBox).listenable(),
           builder: (context, box, child) {
+
             return ListView.builder(
                 itemCount: box.length,
                 itemBuilder: (context, index) {
                   final bank = box.getAt(index);
-                  return ListTile(
-                    title: Text(bank?.name ?? ""),
-                    subtitle: Text("${bank?.accountNumber} - ${bank?.amount}"),
+                  return InkWell(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditBank(bankIndex: index),
+                          ));
+                    },
+                    child: ListTile(
+                      title: Text(bank?.name ?? ""),
+                      subtitle: Text("${bank?.accountNumber} - ${bank?.amount}"),
+                    ),
                   );
                 });
           }),

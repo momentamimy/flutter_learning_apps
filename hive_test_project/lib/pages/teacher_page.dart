@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive_test_project/add_teacher.dart';
+import 'package:hive_test_project/screens/add_teacher.dart';
 import 'package:hive_test_project/constants.dart';
 import 'package:hive_test_project/model/teacher.dart';
 
@@ -17,7 +17,7 @@ class _TeacherPageState extends State<TeacherPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ValueListenableBuilder(
-          valueListenable: Hive.box<Teacher>(Constants.bankBox).listenable(),
+          valueListenable: Hive.box<Teacher>(Constants.teacherBox).listenable(),
           builder: (context, box, child) {
             return ListView.builder(
                 itemCount: box.length,

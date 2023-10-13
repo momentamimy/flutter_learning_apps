@@ -30,7 +30,8 @@ initHive() async {
   Hive.registerAdapter<Bank>(BankAdapter());
 
   const secureStorage = FlutterSecureStorage();
-  final encryptionKeyString = await secureStorage.read(key: Constants.hiveBankSecureKey);
+  final encryptionKeyString =
+      await secureStorage.read(key: Constants.hiveBankSecureKey);
   if (encryptionKeyString == null) {
     final key = Hive.generateSecureKey();
     await secureStorage.write(
@@ -39,13 +40,14 @@ initHive() async {
     );
   }
   final key = await secureStorage.read(key: Constants.hiveBankSecureKey);
-  final encryptionKeyUint8List = base64Url.decode(key!);
-  print('Encryption key Uint8List: $encryptionKeyUint8List');
+  final encryptionKeyUnit8List = base64Url.decode(key!);
+  print('Encryption key Uint8List: $encryptionKeyUnit8List');
 
   await Hive.openBox(Constants.homeBox);
   await Hive.openBox<Student>(Constants.studentBox);
   await Hive.openBox<Teacher>(Constants.teacherBox);
-  await Hive.openBox<Bank>(Constants.bankBox,encryptionCipher: HiveAesCipher(encryptionKeyUint8List));
+  await Hive.openBox<Bank>(Constants.bankBox,
+      encryptionCipher: HiveAesCipher(encryptionKeyUnit8List));
 }
 
 class MyApp extends StatelessWidget {
@@ -102,5 +104,15 @@ class _MyHomePageState extends State<MyHomePage> {
             BottomNavigationBarItem(label: "bank", icon: Icon(Icons.money)),
           ]),
     );
+  }
+
+  @override
+  void dispose() {
+    Hive.box(Constants.homeBox).compact();
+    Hive.box(Constants.studentBox).compact();
+    Hive.box(Constants.teacherBox).compact();
+    Hive.box(Constants.bankBox).compact();
+    Hive.close();
+    super.dispose();
   }
 }

@@ -28,19 +28,6 @@ class _HomePageState extends State<HomePage> {
       "7": "hamouda",
     });
     homeBox.add("added_name");
-    testfun();
-  }
-  testfun() async {
-    var box = await Hive.openBox<String?>('writeNullBox');
-
-    box.values;
-    box.put('key', 'value');
-
-    box.put('key', null);
-    print("null____________________${box.containsKey('key')}");
-
-    box.delete('key');
-    print("delete____________________${box.containsKey('key')}");
   }
 
   @override
