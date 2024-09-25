@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/animations_test_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/animations_test_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/animations_test_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/google_maps_demo/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/google_maps_demo/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/google_maps_demo/build" />
+      <excludeFolder url="file://$MODULE_DIR$/hive_test_project/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/hive_test_project/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/hive_test_project/build" />
+      <excludeFolder url="file://$MODULE_DIR$/riverpod_project/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/riverpod_project/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/riverpod_project/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sqflite_test_project/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sqflite_test_project/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/sqflite_test_project/build" />
+      <excludeFolder url="file://$MODULE_DIR$/unit_testing_projects/first_test/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/unit_testing_projects/first_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/unit_testing_projects/first_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/unit_testing_projects/mock_api_testing/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/unit_testing_projects/mock_api_testing/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/unit_testing_projects/mock_api_testing/build" />
+      <excludeFolder url="file://$MODULE_DIR$/unit_testing_projects/validator_unit_testing/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/unit_testing_projects/validator_unit_testing/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/unit_testing_projects/validator_unit_testing/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

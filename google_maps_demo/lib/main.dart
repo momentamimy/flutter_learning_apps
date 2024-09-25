@@ -1,15 +1,13 @@
 import 'dart:async';
+import 'dart:ui' as ui;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animarker/flutter_map_marker_animation.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_demo/utils/google_map_utils.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
-import 'dart:ui' as ui;
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(const MyApp());
@@ -56,6 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
   late final LocationSettings _locationSettings;
   late final StreamSubscription<Position> _liveLocationStream;
   bool showGetDirectionsButton = false;
+
+  Map<PolylineId, Polyline> polyLinesMap = {};
 
   void init() async {
     _currentPosition = await GoogleMapUtils.determinePosition();
@@ -126,36 +126,74 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Animarker(
-        mapId: _mapController.future.then<int>((value) => value.mapId),
-        markers: _markers.toSet(),
-        shouldAnimateCamera: false,
-        child: GoogleMap(
-          onMapCreated: (gController) => _mapController.complete(gController),
-          initialCameraPosition: const CameraPosition(
-            target: LatLng(0, 0),
-          ),
-          onLongPress: (argument) {
-            final desMarker = Marker(
-              markerId: const MarkerId("destination"),
-              position: argument,
-              infoWindow: const InfoWindow(title: "destination"),
-            );
-            if (_markers.any((marker) => marker.markerId.value == "destination")) {
-              _markers[_markers.indexWhere(
-                      (marker) => marker.markerId.value == "destination")] = desMarker;
-            } else {
-              _markers.add(desMarker);
-            }
-            setState(() {});
-          },
-          myLocationButtonEnabled: true,
-          myLocationEnabled: true,
+      body: GoogleMap(
+        onMapCreated: (gController) => _mapController.complete(gController),
+        initialCameraPosition: const CameraPosition(
+          target: LatLng(0, 0),
         ),
+        markers: _markers.toSet(),
+        polylines: polyLinesMap.values.toSet(),
+        onLongPress: (destination) async {
+          final desMarker = Marker(
+            markerId: const MarkerId("destination"),
+            position: destination,
+            infoWindow: const InfoWindow(title: "destination"),
+          );
+          if (_markers
+              .any((marker) => marker.markerId.value == "destination")) {
+            _markers[_markers.indexWhere(
+                    (marker) => marker.markerId.value == "destination")] =
+                desMarker;
+          } else {
+            _markers.add(desMarker);
+          }
+          setState(() {});
+
+          final polyLines = await fetchPolyLines(
+              origin: _currentPosition!.toLatLng(),
+              destination: destination);
+          generatePolyLineFromPoints(polyLines);
+        },
+        myLocationButtonEnabled: true,
+        myLocationEnabled: true,
       ),
     );
   }
 
+  Future<List<LatLng>> fetchPolyLines(
+      {required LatLng origin, required LatLng destination}) async {
+    List<LatLng> polylineCoordinates = [];
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      googleApiKey: "AIzaSyD4-HHVfSUur0PtuG-BAA4CNjZZeQzYJa0",
+      request: PolylineRequest(
+        origin: PointLatLng(origin.latitude, origin.longitude),
+        destination: PointLatLng(destination.latitude, destination.longitude),
+        mode: TravelMode.driving,
+      ),
+    );
+    print("_____________${result.points}");
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    } else {
+      print(result.errorMessage);
+    }
+    return polylineCoordinates;
+  }
+
+  void generatePolyLineFromPoints(List<LatLng> polylineCoordinates) async {
+    PolylineId id = PolylineId("poly");
+    Polyline polyline = Polyline(
+        polylineId: id,
+        color: Colors.black,
+        points: polylineCoordinates,
+        width: 4);
+    setState(() {
+      polyLinesMap[id] = polyline;
+    });
+  }
   @override
   void dispose() {
     _liveLocationStream.cancel();
@@ -163,3 +201,10 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 }
+
+extension on Position {
+  LatLng toLatLng() {
+    return LatLng(latitude, longitude);
+  }
+}
+
